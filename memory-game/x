@@ -1,0 +1,554 @@
+<!-- # ****Memory Game****
+
+[memory-game-starter-code.zip](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/cc06afaa-6005-4360-9e91-e20f86949305/memory-game-starter-code.zip)
+
+For this assignment, you’ll be building a memory game in the browser using HTML, CSS, and JavaScript. Your goal is to build a card-based memory game.
+
+Players will be shown a collection of cards, face down, and can click on a card to reveal what’s underneath.
+
+After clicking on two cards, the game should check to see whether they match. If they do, they will remain facing up.
+
+If not, the cards should remain displayed to the player for one second, and then flip back down.
+
+The goal of the game is to match up all the pairs.
+
+You can find a 30 second video demo of a possible solution below
+
+[memory-game.mp4](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/04e412f0-636a-4373-934f-779a09ad82f8/memory-game.mp4)
+
+## **Part One - Reading the code**
+
+Take a look at the starter code provided.
+
+- We have an array of colors which we shuffle and then loop over to create 10  elements on the page and give them a class of the color we loop over.
+    
+    ***<div>***
+    
+- We then append the  elements to the DOM and add an event listener for a “click” for each of the elements.
+    
+    ***<div>***
+    
+
+Make sure to read through the code before continuing on!
+
+## **Part Two - Implementing clicks and matches**
+
+- Clicking a card should change the background color to be the color of the class it has.
+- Users should only be able to change at most two cards at a time.
+- Clicking on two matching cards should be a “match” — those cards should stay face up.
+- When clicking two cards that are not a match, they should stay turned over for at least 1 second before they hide the color again. You should make sure to use a  so that you can execute code after one second.
+    
+    ***setTimeout***
+    
+
+## **Part Three - Gotchas**
+
+- Make sure this works only if you click on two *different* cards — clicking the same card twice shouldn’t count as a match!)
+- Make sure that you can not click too quickly and guess more than two cards at a time.
+
+### **Further Study**
+
+- Add a button that when clicked will start the game
+- Add a button that when clicked will restart the game once it has ended
+- For every guess made, increment a score variable and display the score while the game is played
+- Store the lowest-scoring game in local storage, so that players can see a record of the best game played.
+- Allow for any number of cards to appear
+- Instead of hard-coding colors, try something different like random colors or even images!
+ChatGPT
+It looks like you have an assignment to create a memory game using HTML, CSS, and JavaScript. Let me break down the parts you need to implement:
+
+Part One - Reading the code:
+
+The starter code provides an array of colors.
+These colors are shuffled and used to create elements on the page (probably representing cards) with each element having a class corresponding to one of the colors.
+Event listeners for a "click" event are added to each of these elements.
+Part Two - Implementing clicks and matches:
+
+When a card is clicked, you need to change its background color to match its class (color).
+Users should be able to click at most two cards at a time.
+If the user clicks on two matching cards, they should remain face up.
+If the user clicks on two cards that do not match, they should stay face up for at least 1 second before flipping back to their original state. You can use setTimeout to achieve this delay.
+Part Three - Gotchas:
+
+Ensure that the game logic works only if the user clicks on two different cards. Clicking the same card twice should not count as a match.
+Implement logic to prevent users from clicking too quickly and guessing more than two cards at a time.
+Further Study (Optional):
+
+Add a button that starts the game when clicked.
+Add a button that restarts the game once it has ended.
+Implement a scoring system where you increment a score variable for every correct match and display the score while the game is played.
+Store the lowest-scoring game in local storage so that players can see a record of the best game played.
+Allow for any number of cards to appear, which would require dynamic card generation.
+Instead of hard-coding colors, you can try something different like using random colors or even images for the cards.
+To get started, you can use the provided starter code and gradually implement each part of the game based on the instructions given. It's a fun project that involves both HTML/CSS for the interface and JavaScript for the game logic. Good luck with your assignment!
+
+
+
+
+User
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Memory Game!</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <h1>Memory Game!</h1>
+    <div id="game">
+    </div>
+    <script src="script.js"></script>
+  </body>
+</html>
+ChatGPT
+The HTML code you provided is the basic structure of an HTML document for your memory game. Here's a breakdown of what each part does:
+
+<!DOCTYPE html>: This declaration specifies the document type and version of HTML being used. In this case, it's HTML5.
+
+<html lang="en">: This opening <html> tag represents the root element of the HTML document. The lang attribute specifies the language of the document as English.
+
+<head>: This section contains meta-information about the document, such as character encoding and the title of the page. Inside the <head>, you have:
+
+<meta charset="UTF-8">: Specifies that the character encoding of the document is UTF-8, which is a widely used character encoding for handling various character sets.
+<title>Memory Game!</title>: Sets the title of the web page, which will be displayed in the browser's title bar or tab.
+<link rel="stylesheet" href="style.css" />: This line includes an external CSS stylesheet named "style.css" to style your memory game. The rel attribute specifies the relationship between the HTML document and the linked resource, and href specifies the path to the stylesheet.
+
+<body>: This section contains the visible content of your web page. Inside the <body>, you have:
+
+<h1>Memory Game!</h1>: A level 1 heading that displays "Memory Game!" at the top of the page.
+<div id="game"></div>: An empty <div> element with the id attribute set to "game." This is where you will dynamically generate and display the memory card game.
+<script src="script.js"></script>: This line includes an external JavaScript file named "script.js" to add functionality to your memory game. The src attribute specifies the path to the JavaScript file.
+In your "script.js" file, you'll need to write JavaScript code to create the memory card game, handle card clicks, implement game logic, and update the DOM accordingly.
+
+In your "style.css" file, you can define the styles for your game's elements, such as card appearance, layout, and animations.
+
+You can start building your memory game by working on the JavaScript and CSS files, as mentioned in your assignment instructions.
+
+
+
+
+User
+#game div {
+  border: 1px solid black;
+  width: 15%;
+  height: 200px;
+  margin: 10px;
+  display: inline-block;
+}
+ChatGPT
+The CSS code you provided appears to be a style rule targeting a div element with the id attribute set to "game." Let's break down what each CSS property does in this rule:
+
+#game div: This is a CSS selector that targets all div elements that are descendants (children) of an element with the id attribute set to "game." In your HTML structure, the <div id="game"> is the parent container, and this rule targets its child div elements.
+
+border: 1px solid black;: This property adds a 1-pixel wide solid black border around each div element that matches the selector. The border is used for visual separation and styling.
+
+width: 15%;: This property sets the width of each div element to 15% of its parent container's width. It makes each card 15% wide, allowing multiple cards to fit horizontally in the "game" container.
+
+height: 200px;: This property sets the height of each div element to a fixed height of 200 pixels. This determines the card's height, making all cards the same height.
+
+margin: 10px;: This property adds a 10-pixel margin around each div element. This margin creates spacing between adjacent cards, giving them some breathing room.
+
+display: inline-block;: This property makes each div element an inline-block level element. This allows the cards to be displayed next to each other horizontally within the "game" container.
+
+Overall, this CSS rule defines the basic styling for the memory game cards. They have a border, specific width and height, margin for spacing, and are displayed side by side in a row. You can further customize the styling in your CSS file to make the cards look the way you want for your memory game.
+
+
+
+
+User
+const gameContainer = document.getElementById("game");
+
+const COLORS = [
+  "red",
+  "blue",
+  "green",
+  "orange",
+  "purple",
+  "red",
+  "blue",
+  "green",
+  "orange",
+  "purple"
+];
+
+// here is a helper function to shuffle an array
+// it returns the same array with values shuffled
+// it is based on an algorithm called Fisher Yates if you want ot research more
+function shuffle(array) {
+  let counter = array.length;
+
+  // While there are elements in the array
+  while (counter > 0) {
+    // Pick a random index
+    let index = Math.floor(Math.random() * counter);
+
+    // Decrease counter by 1
+    counter--;
+
+    // And swap the last element with it
+    let temp = array[counter];
+    array[counter] = array[index];
+    array[index] = temp;
+  }
+
+  return array;
+}
+
+let shuffledColors = shuffle(COLORS);
+
+// this function loops over the array of colors
+// it creates a new div and gives it a class with the value of the color
+// it also adds an event listener for a click for each card
+function createDivsForColors(colorArray) {
+  for (let color of colorArray) {
+    // create a new div
+    const newDiv = document.createElement("div");
+
+    // give it a class attribute for the value we are looping over
+    newDiv.classList.add(color);
+
+    // call a function handleCardClick when a div is clicked on
+    newDiv.addEventListener("click", handleCardClick);
+
+    // append the div to the element with an id of game
+    gameContainer.append(newDiv);
+  }
+}
+
+// TODO: Implement this function!
+function handleCardClick(event) {
+  // you can use event.target to see which element was clicked
+  console.log("you just clicked", event.target);
+}
+
+// when the DOM loads
+createDivsForColors(shuffledColors);
+ChatGPT
+You've made a good start on your memory card game code! Let's go through the code you've provided step by step:
+
+gameContainer is a reference to the HTML element with the id attribute set to "game." This is where you will be adding your card elements.
+
+COLORS is an array that holds the colors you want to use for your cards. Each color appears twice in the array, representing pairs of cards.
+
+The shuffle function is a helper function that shuffles the elements in an array using the Fisher-Yates algorithm. This will help randomize the order of the colors in your COLORS array.
+
+shuffledColors is the result of shuffling the COLORS array. This array will be used to create the randomized card layout.
+
+The createDivsForColors function takes an array of colors and creates card elements for each color. It adds event listeners to each card element to handle clicks. The card elements are then appended to the gameContainer.
+
+The handleCardClick function is a placeholder for the click event handler. Currently, it logs a message to the console when a card is clicked.
+
+Finally, when the DOM loads, the createDivsForColors function is called with the shuffled colors to create and display the card elements.
+
+To complete your memory card game, you'll need to implement the logic inside the handleCardClick function. This is where you'll check for card matches, flip cards, and implement the game rules. You can also add CSS styles to make your cards visually appealing and implement the game logic as described in your assignment.
+
+If you have specific questions or need further assistance with any part of your code, feel free to ask!
+
+
+
+
+User
+can you show me how
+ChatGPT
+Certainly! To complete your memory card game, you'll need to implement the logic inside the handleCardClick function. Here's a step-by-step guide on how to do it:
+
+Keep track of the clicked cards:
+Create a variable to store the currently clicked cards. Initialize it as an empty array.
+You can use an array to store the clicked cards because you need to check if there's a match when two cards are clicked.
+javascript
+Copy code
+let clickedCards = [];
+Modify the handleCardClick function:
+
+In the handleCardClick function, you'll receive an event object that represents the click event. You can access the clicked card element using event.target.
+Check if the card is already face up:
+
+Before doing anything, check if the clicked card is already face up (i.e., has a class that indicates it's revealed). If it is, return from the function to prevent any further actions.
+javascript
+Copy code
+function handleCardClick(event) {
+  const card = event.target;
+
+  // Check if the card is already face up
+  if (card.classList.contains("revealed")) {
+    return;
+  }
+}
+Reveal the clicked card:
+When a card is clicked, change its background color to reveal it.
+Add a class, such as "revealed," to the card to mark it as revealed.
+javascript
+Copy code
+function handleCardClick(event) {
+  const card = event.target;
+
+  // Check if the card is already face up
+  if (card.classList.contains("revealed")) {
+    return;
+  }
+
+  // Reveal the clicked card
+  card.style.backgroundColor = card.classList[0]; // Set background color to the card's color class
+  card.classList.add("revealed"); // Mark the card as revealed
+}
+Track clicked cards:
+Add the clicked card to the clickedCards array.
+javascript
+Copy code
+function handleCardClick(event) {
+  const card = event.target;
+
+  // Check if the card is already face up
+  if (card.classList.contains("revealed")) {
+    return;
+  }
+
+  // Reveal the clicked card
+  card.style.backgroundColor = card.classList[0]; // Set background color to the card's color class
+  card.classList.add("revealed"); // Mark the card as revealed
+
+  // Add the clicked card to the array of clicked cards
+  clickedCards.push(card);
+}
+Check for a match:
+After adding a card to the clickedCards array, check if two cards have been clicked (i.e., clickedCards.length === 2).
+If two cards have been clicked, compare their colors to see if they match.
+If they match, keep them face up by leaving the "revealed" class on them. If they don't match, flip them back face down after a delay.
+javascript
+Copy code
+function handleCardClick(event) {
+  const card = event.target;
+
+  // Check if the card is already face up
+  if (card.classList.contains("revealed")) {
+    return;
+  }
+
+  // Reveal the clicked card
+  card.style.backgroundColor = card.classList[0]; // Set background color to the card's color class
+  card.classList.add("revealed"); // Mark the card as revealed
+
+  // Add the clicked card to the array of clicked cards
+  clickedCards.push(card);
+
+  // Check if two cards have been clicked
+  if (clickedCards.length === 2) {
+    const [card1, card2] = clickedCards;
+
+    // Check if the two clicked cards have the same color class
+    if (card1.classList[0] === card2.classList[0]) {
+      // It's a match! Do something to indicate that.
+    } else {
+      // It's not a match. Flip the cards back face down after a delay.
+      setTimeout(() => {
+        card1.style.backgroundColor = "";
+        card2.style.backgroundColor = "";
+        card1.classList.remove("revealed");
+        card2.classList.remove("revealed");
+      }, 1000); // Delay for 1 second
+    }
+
+    // Clear the clicked cards array for the next pair of clicks
+    clickedCards = [];
+  }
+}
+That's the basic structure of the handleCardClick function. You'll need to add additional logic to handle what happens when there's a match and when the game is won (all pairs are matched). You can also add a scoring system and other features as mentioned in your assignment.
+
+Remember to customize the appearance of the matching cards and the overall styling of your game using CSS to make it visually appealing.
+
+
+
+
+User
+can you show me the additional logic
+ChatGPT
+Sure, I can provide you with additional logic to handle matches and determine when the game is won. Let's build on the handleCardClick function:
+
+javascript
+Copy code
+// Variables to keep track of the game state
+let matches = 0; // Number of matched pairs
+const totalPairs = COLORS.length / 2; // Total number of pairs in the game
+
+function handleCardClick(event) {
+  const card = event.target;
+
+  // Check if the card is already face up or if two cards are already revealed
+  if (card.classList.contains("revealed") || clickedCards.length === 2) {
+    return;
+  }
+
+  // Reveal the clicked card
+  card.style.backgroundColor = card.classList[0]; // Set background color to the card's color class
+  card.classList.add("revealed"); // Mark the card as revealed
+
+  // Add the clicked card to the array of clicked cards
+  clickedCards.push(card);
+
+  // Check if two cards have been clicked
+  if (clickedCards.length === 2) {
+    const [card1, card2] = clickedCards;
+
+    // Check if the two clicked cards have the same color class
+    if (card1.classList[0] === card2.classList[0]) {
+      // It's a match!
+      matches++;
+
+      // Check if all pairs have been matched (game won)
+      if (matches === totalPairs) {
+        // You can add a game won message or trigger a game restart here
+        alert("Congratulations! You've won the game!");
+      }
+    } else {
+      // It's not a match. Flip the cards back face down after a delay.
+      setTimeout(() => {
+        card1.style.backgroundColor = "";
+        card2.style.backgroundColor = "";
+        card1.classList.remove("revealed");
+        card2.classList.remove("revealed");
+      }, 1000); // Delay for 1 second
+    }
+
+    // Clear the clicked cards array for the next pair of clicks
+    clickedCards = [];
+  }
+}
+In the updated code:
+
+We added a matches variable to keep track of how many pairs have been matched.
+
+We calculate the totalPairs based on the length of the COLORS array divided by 2 because there are two cards of each color in the game.
+
+When a pair is matched, we increment the matches variable and check if it equals totalPairs. If it does, it means the player has won the game, and we can display a congratulatory message or trigger a game restart.
+
+You can customize the game won behavior by showing a modal, changing the background, or any other way you prefer. Additionally, you can implement a scoring system or other game features according to your assignment requirements.
+
+
+
+
+User
+- Add a button that when clicked will start the game
+- Add a button that when clicked will restart the game once it has ended
+- For every guess made, increment a score variable and display the score while the game is played
+- Store the lowest-scoring game in local storage, so that players can see a record of the best game played.
+- Allow for any number of cards to appear
+- Instead of hard-coding colors, try something different like random colors or even images!
+ChatGPT
+To add the requested features to your memory card game, let's break them down one by one:
+
+Add a Start Button:
+
+Create an HTML button element for starting the game.
+Add an event listener to this button that initiates the game when clicked.
+html
+Copy code
+<!-- Add this button to your HTML -->
+<button id="start-button">Start Game</button>
+javascript
+Copy code
+// In your JavaScript file, add this code to start the game when the button is clicked
+const startButton = document.getElementById("start-button");
+
+startButton.addEventListener("click", startGame);
+
+function startGame() {
+  // Add logic to initialize the game here
+  // You can shuffle colors, create cards, and more
+}
+Add a Restart Button:
+
+Create an HTML button element for restarting the game.
+Add an event listener to this button that resets the game when clicked.
+html
+Copy code
+<!-- Add this button to your HTML -->
+<button id="restart-button" style="display: none;">Restart Game</button>
+javascript
+Copy code
+// In your JavaScript file, add this code to restart the game when the button is clicked
+const restartButton = document.getElementById("restart-button");
+
+restartButton.addEventListener("click", restartGame);
+
+function restartGame() {
+  // Add logic to reset the game here
+  // You can shuffle colors, clear the board, reset the score, etc.
+}
+Increment and Display Score:
+
+Create a variable to keep track of the player's score.
+Update the score variable when a pair is matched.
+Display the score in the HTML.
+javascript
+Copy code
+// Add a score variable and initialize it to 0
+let score = 0;
+
+// Increment the score when a pair is matched
+function handleCardClick(event) {
+  // ... (previous code)
+
+  // Check if it's a match
+  if (card1.classList[0] === card2.classList[0]) {
+    // It's a match!
+    matches++;
+    score++; // Increment the score
+    updateScore(); // Update the displayed score
+  } else {
+    // ... (previous code)
+  }
+}
+
+// Function to update the displayed score
+function updateScore() {
+  const scoreElement = document.getElementById("score");
+  scoreElement.textContent = `Score: ${score}`;
+}
+html
+Copy code
+<!-- Add this element to your HTML for displaying the score -->
+<p id="score">Score: 0</p>
+Store Lowest Score in Local Storage:
+
+Use localStorage to store the lowest score.
+Compare the current score with the stored score and update it if the current score is lower.
+javascript
+Copy code
+// Check and update the lowest score
+function updateLowestScore() {
+  const storedLowestScore = localStorage.getItem("lowestScore");
+
+  if (!storedLowestScore || score < storedLowestScore) {
+    localStorage.setItem("lowestScore", score);
+  }
+}
+Call updateLowestScore() whenever you update the score.
+
+Allow Any Number of Cards:
+
+Modify your code to dynamically create cards based on the desired number.
+You can use a loop to generate card elements.
+Random Colors or Images:
+
+To use random colors, you can generate random color values using JavaScript.
+For random images, you can use an array of image URLs and randomly assign them to cards.
+javascript
+Copy code
+// Example: Generate random colors for cards
+function generateRandomColors(numCards) {
+  const colors = [];
+  for (let i = 0; i < numCards / 2; i++) {
+    const randomColor = "#" + ((1 << 24) * Math.random() | 0).toString(16);
+    colors.push(randomColor, randomColor); // Create pairs of colors
+  }
+  return shuffle(colors);
+}
+Use generateRandomColors to create colors for your cards when starting or restarting the game.
+
+With these additions and modifications, your memory card game should have a start button, a restart button, a scoring system, and the ability to store and display the lowest score in local storage. You can also customize the game with a variable number of cards and random colors or images as desired.
+
+
+
+
+
+Regenerate
